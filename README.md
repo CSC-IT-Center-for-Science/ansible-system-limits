@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/CSC-IT-Center-for-Science/ansible-system-limits.svg?branch=master)](https://travis-ci.org/CSC-IT-Center-for-Science/ansible-system-limits)
 # nickdtodd.system_limits
 
 A role to set system limits for users/groups across sysctl and limit interfaces. Ensures pam includes module is loaded where appropriate.
