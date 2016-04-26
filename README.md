@@ -35,7 +35,7 @@ Role Variables with their default settings
 Example Playbook
 -------------------------
     - hosts: all
-      sudo: true
+      become: true
       vars:
         limits_domains:
           - domain: root
