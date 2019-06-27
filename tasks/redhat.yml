@@ -1,21 +1,21 @@
 ---
 - name: Template limits.conf
   template: src=limits.conf dest=/etc/security/limits.d/{{ limits_file_name }} owner={{ limits_user }} group={{ limits_group }} mode={{ limits_chmod }} backup=yes
-  when: limits_run_task
+  when: limits_run_task|bool
   register: limitstemplates
 
 - name: Template sysctl.conf
   template: src=sysctl.conf dest=/etc/sysctl.d/{{ sysctl_file_name }} owner={{ sysctl_user }} group={{ sysctl_group }} mode={{ sysctl_chmod }} backup=yes
-  when: sysctl_run_task
+  when: sysctl_run_task|bool
   register: sysctltemplates
 
 - name: Reload sysctl settings
   command: /usr/sbin/sysctl -p
-  when: sysctl_reload and sysctl_run_task and sysctltemplates.changed
+  when: sysctl_reload|bool and sysctl_run_task|bool and sysctltemplates.changed
 
 - name: Reload sysctl settings with system flag
   command: /usr/sbin/sysctl --system
-  when: sysctl_reload and sysctl_run_task and sysctltemplates.changed
+  when: sysctl_reload|bool and sysctl_run_task|bool and sysctltemplates.changed
 
 - name: Ensure PAM entries
   lineinfile: >
@@ -23,4 +23,4 @@
     line='session required pam_limits.so' state=present
   with_items:
     - "{{ pam_files_to_check }}"
-  when: pam_run_task
+  when: pam_run_task|bool
